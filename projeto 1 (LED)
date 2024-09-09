@@ -1,0 +1,22 @@
+#define botao 2
+#define LEDvermelho 8
+
+void setup()
+{
+  pinMode(LEDvermelho, OUTPUT);
+  pinMode(botao, INPUT);
+}
+
+void loop()
+{
+  if (digitalRead(botao) == HIGH) // Verifica se o botão foi pressionado
+  {
+    digitalWrite(LEDvermelho, HIGH); // Acende o LED
+    delay(2000);                     // Espera 2 segundos
+    digitalWrite(LEDvermelho, LOW);  // Apaga o LED
+    delay(1000);                     // Espera 1 segundo
+  }
+}
+
+
+https://www.tinkercad.com/things/c1LZDwzjIOJ-epic-blad/editel
