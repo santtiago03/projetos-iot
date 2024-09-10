@@ -1,22 +1,43 @@
+
 #define botao 2
 #define LEDvermelho 8
+#define LEDverde 4
+
+bool estado = false;  // Variável para armazenar o estado atual (ligado/desligado)
+bool botaoPressionado = false;  // Variável para armazenar o estado do botão
 
 void setup()
 {
-  pinMode(LEDvermelho, OUTPUT);
-  pinMode(botao, INPUT);
+  pinMode(LEDvermelho, OUTPUT);  // Define o LED vermelho como saída
+  pinMode(LEDverde, OUTPUT);     // Define o LED verde como saída
+  pinMode(botao, INPUT);         // Define o botão como entrada
 }
 
 void loop()
 {
-  if (digitalRead(botao) == HIGH) // Verifica se o botão foi pressionado
+  if (digitalRead(botao) == HIGH && !botaoPressionado)  // Verifica se o botão foi pressionado
   {
-    digitalWrite(LEDvermelho, HIGH); // Acende o LED
-    delay(2000);                     // Espera 2 segundos
-    digitalWrite(LEDvermelho, LOW);  // Apaga o LED
-    delay(1000);                     // Espera 1 segundo
+    estado = !estado;  // Alterna o estado (ligado/desligado)
+    botaoPressionado = true;  // Define que o botão foi pressionado para evitar múltiplas mudanças rápidas
+    delay(50);  // Anti-bounce para evitar que o botão alterne muito rápido
+  }
+
+  if (digitalRead(botao) == LOW) {
+    botaoPressionado = false;  // Libera o botão quando ele for solto
+  }
+
+  if (estado)  // Se o estado for "ligado", começa o ciclo de LEDs
+  {
+    // Acende o LED vermelho, espera 2 segundos, depois apaga e espera 1 segundo
+    digitalWrite(LEDvermelho, HIGH);
+    delay(2000);
+    digitalWrite(LEDvermelho, LOW);
+    delay(1000);
+
+    // Acende o LED verde, espera 2 segundos, depois apaga e espera 1 segundo
+    digitalWrite(LEDverde, HIGH);
+    delay(2000);
+    digitalWrite(LEDverde, LOW);
+    delay(1000);
   }
 }
-
-
-https://www.tinkercad.com/things/c1LZDwzjIOJ-epic-blad/editel
