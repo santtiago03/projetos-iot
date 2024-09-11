@@ -1,0 +1,51 @@
+const int triggerPin = 7;
+const int echoPin = 6;
+const int ledVerde = 9;
+const int ledVermelho = 2;
+
+void setup() {
+    pinMode(triggerPin, OUTPUT); 
+    pinMode(echoPin, INPUT);     
+    pinMode(ledVerde, OUTPUT);     
+  	pinMode(ledVermelho, OUTPUT);
+    Serial.begin(9600);          
+}
+
+long readUltrasonicDistance() {
+    
+    digitalWrite(triggerPin, LOW);
+    delayMicroseconds(2);
+    digitalWrite(triggerPin, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(triggerPin, LOW);
+
+    
+    long duration = pulseIn(echoPin, HIGH);
+
+   
+    long distance = duration * 0.0344 / 2; 
+    return distance;
+}
+
+void loop() {
+    long distancia = readUltrasonicDistance();
+    Serial.print("Distance: ");
+    Serial.print(distancia);
+    Serial.println(" cm");
+
+    
+    if (distancia < 60) {
+        digitalWrite(ledVerde, HIGH);
+    } else {
+        digitalWrite(ledVerde, LOW);
+    }
+     
+    if (distancia > 60) { 
+        digitalWrite(ledVermelho, HIGH);
+    } else {
+        digitalWrite(ledVermelho, LOW);
+    }
+
+    delay(100); 
+}
+
